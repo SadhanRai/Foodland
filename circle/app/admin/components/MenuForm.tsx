@@ -1,60 +1,116 @@
 "use client";
-import Form from "./Form"
-import Navbar from "../../home/components/Navbar"
-import React, { useState } from 'react'
-import { RxCross2 } from 'react-icons/rx';
+import React, { useState } from "react";
+import { RxCross2 } from "react-icons/rx";
+import { FiEdit } from "react-icons/fi";
+import Form from "./Form";
+import { useMenu } from "@/app/hooks/useMenu";
 
 const MenuForm = () => {
+    const { menus } = useMenu();
+    const { loading } = useMenu();
 
-    const [form, setForm] = useState(false);
-    console.log("form is clicked ", form)
+    const [formOpen, setFormOpen] = useState(false);
+    const [mode, setMode] = useState("create"); // create | edit
+    const [selectedMenu, setSelectedMenu] = useState(null);
+
+    const openCreateForm = () => {
+        setMode("create");
+        setSelectedMenu(null);
+        setFormOpen(true);
+    };
+
+    const openEditForm = () => {
+        setMode("edit");
+        setSelectedMenu(menus);
+        setFormOpen(true);
+    };
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-6">
-            <div className="bg-gray-300 h-15 rounded-2xl flex items-center justify-center p-10 cursor-pointer" onClick={() => setForm(true)}>
-                <Navbar />
+        <>
+            {/* MENU CARD */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="relative bg-gray-900 rounded-2xl p-4 sm:p-6 text-white">
 
-                + Add Menu Item
+                    {/* Edit Button */}
+                    <button
+                        onClick={openEditForm}
+                        className="absolute top-3 right-3 cursor-pointer bg-white text-black p-2 rounded-full shadow hover:bg-gray-100"
+                    >
+                        <FiEdit size={16} />
+                    </button>
 
+                    {/* Clickable area for create */}
+                    <div
+                        className="cursor-pointer"
+                        onClick={openCreateForm}
+                    >
+                        <h3 className="text-lg font-semibold mb-3">
+                            Menu Items
+                        </h3>
+
+                        <div className="flex flex-wrap gap-2">
+                            {menus?.items?.length > 0 ? (
+                                menus.items.map((item, index) => (
+                                    <span
+                                        key={index}
+                                        className="bg-white/20 px-3 py-1 rounded-full text-sm"
+                                    >
+                                        {item.label}
+                                    </span>
+                                ))
+                            ) : (
+                                <p className="text-sm opacity-80">
+                                    No menu items yet
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                </div>
             </div>
 
-
-            {form && (
+            {/* MODAL */}
+            {formOpen && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
-                    onClick={() => setForm(false)}
+                    onClick={() => setFormOpen(false)}
                 >
                     <div
-                        className="bg-white w-full max-w-lg md:max-w-2xl rounded-lg shadow-lg max-h-[90vh] overflow-y-auto"
+                        className="bg-white w-full max-w-lg sm:max-w-xl md:max-w-2xl rounded-lg shadow-lg max-h-[90vh] overflow-y-auto"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="flex justify-between items-center p-4 border-b-1 border-gray-300 shadow-2xs">
-                            <h2 className="text-lg font-semibold">Menu Form </h2>
-                            <button className='text-black text-2xl cursor-pointer' onClick={() => setForm(false)}>
-
+                        {/* Header */}
+                        <div className="flex justify-between items-center p-4 border-b border-gray-400 w-full max-w-lg sm:max-w-xl md:max-w-2xl bg-red-400">
+                            <h2 className="text-lg font-semibold">
+                                {mode === "create" ? "Create Menu" : "Edits Menu"}
+                            </h2>
+                            <button
+                                className="text-2xl"
+                                onClick={() => setFormOpen(false)}
+                            >
                                 <RxCross2 />
                             </button>
                         </div>
 
-                        <div className="px-4 pt-4">
-
+                        {/* Form */}
+                        <div className="p-4 ">
                             <Form
-                                title="Create Menu"
+                                title={mode === "create" ? "Create Menu" : "Edit Menu"}
                                 showMenuItems={true}
                                 showSocials={true}
-                                submitText="Save Menu"
+                                submitText={mode === "create" ? "Save Menu" : "Update Menu"}
+                                initialData={selectedMenu}   // 👈 pass menu data for edit
+                                mode={mode}
+
+                                loading={loading}
+
+                            // 👈 tell form create or edit
                             />
-
-
                         </div>
                     </div>
                 </div>
             )}
+        </>
+    );
+};
 
-
-
-        </div>
-    )
-}
-
-export default MenuForm
+export default MenuForm;

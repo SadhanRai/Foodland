@@ -7,7 +7,7 @@ import MenuForm from './components/MenuForm';
 
 const page = () => {
     return (
-        <div className='overflow-y-auto h-screen bg-gray-200 rounded-2xl border-1 border-gray-200 m-4 p-2'>
+        <div className='overflow-y-auto h-screen bg-gray-200 rounded-2xl border-1 border-gray-200 '>
             <Container>
                 <MenuForm />
 

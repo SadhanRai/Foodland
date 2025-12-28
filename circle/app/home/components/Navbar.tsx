@@ -7,10 +7,10 @@ import Container from './Container';
 import { RxCross2, RxHamburgerMenu } from 'react-icons/rx';
 // import { La_Belle_Aurore } from 'next/font/google';
 // import path from 'path';
+
+import { useMenu } from "../../hooks/useMenu"
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
-import axios from 'axios';
-import RateLimitedUi from './RateLimitedUI';
+
 
 
 
@@ -25,45 +25,10 @@ const iconMap = {
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     const pathname = usePathname();
-    const [Ratelimit, setRatelimit] = useState(true);
-    const [menus, setMenus] = useState([]);
-    const [loading, setLoading] = useState(true);
-    console.log("navbar render", open);
-
-    useEffect(() => {
-
-        const fetchMenus = async () => {
-            try {
-                // const res = await fetch("http://localhost:4000/api/menu");
-                const res = await axios.get("http://localhost:4000/api/menu/data");
-
-                console.log("Menu data:", res.data[0]);
-                setMenus(res.data[0]);
-                setRatelimit(false);
-            }
-            catch (error) {
-                console.error("Error fetching menu data:", error);
-                console.log(error);
-                if (error.response?.status === 429) {
-                    setRatelimit(true);
-                } else {
-                    console.error("An unexpected error occurred.");
-                }
-            } finally {
-                setLoading(false);
-            }
-
-            console.log("Fetched menu data");
-
-        }
-
-        fetchMenus();
 
 
 
-
-    }, [])
-    console.log("setmenus", menus);
+    const { menus, loading, ratelimit, error } = useMenu();
 
 
     return (

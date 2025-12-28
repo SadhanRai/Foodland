@@ -1,6 +1,7 @@
 import React from 'react'
-import Navbar from './components/Navbar'
 import AutoSlider from './components/HomeSlider'
+import Categories from './components/Categories'
+import Recipes from './components/Recipes'
 
 const page = () => {
     return (
@@ -8,6 +9,8 @@ const page = () => {
         <>
 
             <AutoSlider />
+            <Categories />
+            <Recipes/>
 
         </>
     )
