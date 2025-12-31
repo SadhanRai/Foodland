@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './components/Navbar'
+import SlideProvider from '../context/slideProvider'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -7,7 +8,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div>
 
                 <Navbar />
-                {children}
+                <SlideProvider isAdmin={false}>
+                    {children}
+                </SlideProvider>
             </div>
 
         </div>
