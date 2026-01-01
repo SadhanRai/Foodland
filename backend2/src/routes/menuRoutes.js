@@ -23,4 +23,6 @@ router.delete("/:id", deleteMenu);
 //   res.status(200).send("we delete the menu details successfully");
 // });
 
+
+
 export default router;

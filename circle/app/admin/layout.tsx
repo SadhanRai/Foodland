@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
+import SlideProvider from "../context/slideProvider";
 
 const Layout = ({ children }) => {
     return (
@@ -18,8 +19,10 @@ const Layout = ({ children }) => {
                 <main className="flex-1 p-5 bg-gray-50 no-scrollbar">
                     {/* Mobile Spacer (for the mobile hamburger header) */}
                     <div className="h-16 lg:hidden" />
+                    <SlideProvider isAdmin={true}>
 
-                    {children}
+                        {children}
+                    </SlideProvider>
                 </main>
             </div>
         </div>

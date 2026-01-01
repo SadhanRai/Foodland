@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.pngall.com" },
       { protocol: "https", hostname: "cdn3d.iconscout.com" },
       { protocol: "https", hostname: "iconscout.com" },
+      { protocol: "https", hostname: "res.cloudinary.com" },
       {
         protocol: 'https',
         hostname: 'png.pngtree.com',

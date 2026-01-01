@@ -1,11 +1,11 @@
 "use client";
 
 import axios from "axios";
-import React, { createContext } from "react";
+import React, { createContext, ReactNode } from "react";
 import { useState, useEffect } from "react";
 export const MenuContext = createContext(null);
 
-const MenuProvider = ({ children }) => {
+const MenuProvider = ({ children }: { children: ReactNode }) => {
     const [menus, setMenus] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

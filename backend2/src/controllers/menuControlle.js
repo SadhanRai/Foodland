@@ -3,7 +3,7 @@ import Menu from "../../model/Menu.js";
 
 export const getAllMenu = async (req, res) => {
   try {
-    const menus = await Menu.find().sort({ createdAt: -1 });
+    const menus = await Menu.find().sort({ createdAt: -1 }); //this make the order diff, give the latest at top 
     res.status(200).json(menus);
   } catch (error) {
     console.error("Error fetching menu:", error);

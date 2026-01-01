@@ -4,6 +4,11 @@ import { FaBookDead } from "react-icons/fa";
 import { IoIosTime } from "react-icons/io";
 import { MdLocalDining } from "react-icons/md";
 import { FaCirclePlay } from "react-icons/fa6";
+import { useSlide } from "@/app/hooks/useSlide";
+import { format } from "date-fns";
+
+
+
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -21,6 +26,22 @@ import Container from "../components/Container"
 
 const AutoSlider = () => {
     // Dummy dataset
+    const formatCreatedAt = (dateString) => {
+        if (!dateString) return "";
+
+        const date = new Date(dateString);
+
+        // 'en-GB' results in Day Month Year (1 January 2026)
+        return date.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+    };
+
+    const { slides } = useSlide();
+
+    console.log("slidebarhas", slides);
     const slidebar = [
         {
             id: 1,
@@ -101,8 +122,8 @@ const AutoSlider = () => {
 
 
 
-                        {slidebar.map((item) => (
-                            <SwiperSlide key={item.id} >
+                        {slides.map((item) => (
+                            <SwiperSlide key={item._id} >
                                 <div
                                     key={item.id}
                                     className="bg-[#E7FAFE] h-[195px] lg:h-[495px] md:h-[350px] w-full min-w-[300px] md:min-w-[400px] lg:min-w-[500px] xl:max-w-[1280px] flex flex-shrink-0 rounded-[30px] lg:rounded-[50px] overflow-hidden mt-10"
@@ -141,7 +162,7 @@ const AutoSlider = () => {
                                             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                                                 <div className="w-8 h-8 sm:w-11 sm:h-11 lg:w-16 lg:h-16 flex-shrink-0">
                                                     <Image
-                                                        src={item.authorImage}
+                                                        src={item.author?.image || "https://ui-avatars.com/api/?name=" + item.author?.name}
                                                         alt="author"
                                                         width={500}
                                                         height={500}
@@ -150,10 +171,14 @@ const AutoSlider = () => {
                                                 </div>
                                                 <div className="flex flex-col min-w-0">
                                                     <span className="font-medium text-[10px] sm:text-xs lg:text-[20px] truncate">
-                                                        {item.author}
+                                                        {item.author.name}
                                                     </span>
                                                     <span className="text-[8px] sm:text-[10px] lg:text-[15px] text-gray-500 truncate">
-                                                        {item.date}
+                                                        <span>
+                                                            {slides.length > 0 && formatCreatedAt(slides[0].createdAt)}
+                                                        </span>
+
+
                                                     </span>
                                                 </div>
                                             </div>
@@ -173,7 +198,7 @@ const AutoSlider = () => {
                                     <div className="w-1/2 h-full">
                                         <img
                                             className="w-full h-full object-cover rounded-tr-[3] rounded-br-[30px]"
-                                            src={item.image}
+                                            src={item.link}
                                             alt=""
                                         />
                                     </div>
