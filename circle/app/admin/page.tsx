@@ -1,8 +1,7 @@
 import React from 'react'
-import Header from './components/Header';
-import Dashboard from './dashboard/page';
-import Container from '../home/components/Container';
-import MenuForm from './components/MenuForm';
+
+import Container from '../../src/components/container/Container';
+import MenuForm from '../../src/components/menuform/MenuForm';
 
 
 const page = () => {

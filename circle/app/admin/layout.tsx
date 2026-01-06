@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "./components/Sidebar";
-import Header from "./components/Header";
-import SlideProvider from "../context/slideProvider";
+import Sidebar from "../../src/components/sidebar/Sidebar";
+import Header from "../../src/components/header/Header";
+import SlideProvider from "../../src/context/slideProvider";
 
 const Layout = ({ children }) => {
     return (
