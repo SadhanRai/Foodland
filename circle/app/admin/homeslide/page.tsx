@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import Container from "../../home/components/Container";
+import Container from "../../../src/components/container/Container";
 // Consistency: Using Plus from lucide-react instead of mixing libraries
 import { Pencil, Trash2, ExternalLink, Clock, Plus } from "lucide-react";
-import { useSlide } from "@/app/hooks/useSlide";
+import { useSlide } from "../../../src/hooks/useSlide";
 
 const HomeSlide = () => {
 
@@ -54,7 +54,7 @@ const HomeSlide = () => {
                         <h2 className="text-2xl font-bold text-gray-900">Slider Management</h2>
                         <p className="text-sm text-gray-500 mt-1">Manage your homepage hero images and content.</p>
                     </div>
-                    <button className="bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-all text-sm font-semibold shadow-sm flex items-center gap-2">
+                    <button className="bg-gray-800 text-white px-5 py-2.5 rounded-lg hover:bg-gray-950 transition-all text-sm font-semibold shadow-sm flex items-center gap-2 cursor-pointer">
                         <Plus size={18} /> Add New Slide
                     </button>
                 </div>
@@ -109,16 +109,10 @@ const HomeSlide = () => {
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
 
-                                                <tr key={item._id}>
-                                                    {/* ... other cells ... */}
-                                                    <td className="px-2 py-2 text-[12px]">
-                                                        {/* NO .map here! Just use the 'item' from the row loop */}
-                                                        {formatCreatedAt(item.createdAt)}
-                                                    </td>
-                                                </tr>
-
+                                            {/* FIXED DATE CELL */}
+                                            <td className="px-2 py-4 text-sm">
+                                                {formatCreatedAt(item.createdAt)}
                                             </td>
 
                                             {/* Status Toggle Column */}
