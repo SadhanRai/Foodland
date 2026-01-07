@@ -3,7 +3,8 @@ dotenv.config();
 import express from "express";
 import menuRoutes from "./routes/menuRoutes.js";
 import slideRoutes from "./routes/slideRoutes.js";
-import adminRoute from "./routes/adminRoute.js"
+import adminRoute from "./routes/adminRoute.js";
+import productRouter from "./routes/productRoutes.js";
 import { connectMongoDB } from "./config/db.js";
 import rateLimiter from "./middleware/rateLimiter.js";
 import cors from "cors";
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 app.use("/api/menu/data", menuRoutes);
 app.use("/api/slide/data", slideRoutes);
 app.use("/api/admin", adminRoute);
+app.use("/api/admin", productRouter);
 
 // app.get("/api/data", (req, res) => {
 //   res.send("Hello asdfa from Backenasdfasd2asdasd!");

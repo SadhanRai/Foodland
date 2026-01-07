@@ -1,9 +1,12 @@
 import React from "react";
-import Sidebar from "../../src/components/sidebar/Sidebar";
-import Header from "../../src/components/header/Header";
-import SlideProvider from "../../src/context/slideProvider";
+import Sidebar from "../../../src/components/sidebar/Sidebar";
+import Header from "../../../src/components/header/Header";
+import SlideProvider from "../../../src/context/slideProvider";
+
+
 
 const Layout = ({ children }) => {
+
     return (
         <div className="flex min-h-screen">
             {/* 1. Sidebar - Fixed on the left */}
@@ -20,6 +23,7 @@ const Layout = ({ children }) => {
                     {/* Mobile Spacer (for the mobile hamburger header) */}
                     <div className="h-16 lg:hidden" />
                     <SlideProvider isAdmin={true}>
+
 
                         {children}
                     </SlideProvider>

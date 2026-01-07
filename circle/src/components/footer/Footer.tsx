@@ -54,7 +54,7 @@ const Footer = () => {
                         ))}
 
                         <Link
-                            href="/admin/dashboard"
+                            href="/admin"
                             className="flex items-center gap-1 bg-black text-white px-5 py-2.5 rounded-full hover:bg-zinc-800 transition-all active:scale-95 shadow-sm"
                         >
                             Dashboard <ArrowUpRight size={14} />
