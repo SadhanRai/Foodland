@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { handleError, handleSuccess } from '../../ui/UtilToast';
+import { handleError, handleSuccess } from '../../../ui/UtilToast';
 import { useRouter } from 'next/navigation';
 
 const LoginForm = () => {
@@ -20,13 +20,17 @@ const LoginForm = () => {
 
     try {
       const url = "http://localhost:4000/api/admin/login";
-
+      console.log("we are at try function ")
       const response = await fetch(url, {
         method: "POST",
+
+
         headers: {
           'Content-Type': 'application/json'
 
         },
+        credentials: 'include',
+
         body: JSON.stringify({ email, password })
       });
 
@@ -44,18 +48,17 @@ const LoginForm = () => {
 
       localStorage.setItem("token", result.token);
       localStorage.setItem("LoggedInUser", result.username);
-      res.setHeader("Set-Cookie", `admin_token=${result.token}; HttpOnly; Path=/; Max-Age=3600; SameSite=Lax`);
 
 
-      handleSuccess("welcome back you have logedin ");
+      handleSuccess("welcome back you have logedin", result.token);
       setTimeout(() => {
-        router.push('/home')
+        router.push('/admin')
       }, 500)
 
 
     } catch (error) {
       handleError("Network error. Try again.");
-      console.log(error);
+      console.log("failed errror is ", error);
     }
 
 

@@ -67,11 +67,34 @@ export const Login = async (req, res) => {
       expiresIn: "1d",
     });
 
-    res.status(200).json({ token, username: user.name, role: user.role, });
+    res.cookie("auth-token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: "lax",
+    });
+
+    res.status(200).json({ token, username: user.name, role: user.role });
   } catch (error) {
     // This will now tell you exactly what is wrong if it fails again
     res
       .status(500)
       .json({ message: "error while login", error: error.message });
+  }
+};
+
+export const Logout = async (req, res) => {
+  try {
+    // 1. Clear the 'token' cookie
+    res.clearCookie("auth-token", {
+      httpOnly: true, // must match login cookie
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax", // must match login cookie
+      path: "/", // important: path must match
+    });
+
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Logout failed", error: error.message });
   }
 };

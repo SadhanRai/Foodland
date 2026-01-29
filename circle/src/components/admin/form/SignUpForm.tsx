@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { handleError, handleSuccess } from '../../ui/UtilToast';
+import { handleError, handleSuccess } from '../../../ui/UtilToast';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const SignupForm = () => {

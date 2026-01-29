@@ -1,4 +1,4 @@
-import SignupForm from "../../../../src/components/admin/SignUpForm";
+import SignupForm from "../../../../src/components/admin/form/SignUpForm";
 
 export const metadata = {
     title: "Admin Signup | Foodieland",

@@ -1,15 +1,15 @@
 
 import { toast } from "react-toastify";
 
-export const handleSuccess = (msg) => {
+export const handleSuccess = (msg: string) => {
     toast.success(msg, {
         position: 'top-center'
     })
 }
 
-export const handleError = (msg) => {
+export const handleError = (msg: string) => {
     toast.error(msg, {
         position: 'top-center'
     })
-    console.log("this error function is called ", msg)
+    console.log( msg)
 }
