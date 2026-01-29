@@ -13,29 +13,21 @@ const navItems = [
     { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, toggleSidebar }) {
     const pathname = usePathname();
-    const [isOpen, setIsOpen] = useState(false);
 
-    const toggleSidebar = () => setIsOpen(!isOpen);
+
+
 
     return (
         <>
-            {/* --- MOBILE HEADER (Visible only on small screens) --- */}
-            <div className="lg:hidden flex items-center justify-between p-4 bg-white shadow-md fixed top-0 left-0 right-0 z-50">
-                <div className="text-2xl lobster tracking-wide text-black">Foodieland</div>
-                <button onClick={toggleSidebar} className="p-2 text-gray-600 focus:outline-none">
-                    {isOpen ? <X size={28} /> : <Menu size={28} />}
-                </button>
-            </div>
-
-            {/* --- OVERLAY (Darkens background when mobile menu is open) --- */}
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-40 lg:hidden"
-                    onClick={toggleSidebar}
+                    className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={toggleSidebar}
+
                 />
             )}
+
 
             {/* --- SIDEBAR --- */}
             <aside className={`
@@ -45,11 +37,17 @@ export default function Sidebar() {
     /* Desktop: Always fixed to the left */
     lg:translate-x-0 
 `}>
+
+
+
                 {/* Brand */}
                 <div className="text-3xl lobster mb-10 tracking-wide border-b border-gray-200 pb-4 flex items-center gap-2">
-                    <Utensils className="text-orange-500" />
+
                     Foodieland
                 </div>
+
+
+
 
                 {/* Menu */}
                 <nav className="flex flex-col space-y-2">

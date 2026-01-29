@@ -3,6 +3,7 @@ import {
   getRegister,
   Login,
   Register,
+  Logout,
 } from "../controllers/adminController.js";
 import {
   loginValidation,
@@ -14,5 +15,6 @@ const router = express.Router();
 router.get("/signup", getRegister);
 router.post("/signup", signupValidation, Register);
 router.post("/login", loginValidation, Login);
+router.post("/logout", Logout);
 
 export default router;

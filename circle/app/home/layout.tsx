@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../../src/components/navbar/Navbar'
 import SlideProvider from '../../src/context/slideProvider'
 import Footer from '../../src/components/footer/Footer'
+import MenuProvider from '@/src/context/menuProvider'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -10,19 +11,22 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         */
         <div className='min-h-screen flex flex-col bg-white'>
 
-            <Navbar />
+            <MenuProvider>
+                <Navbar />
 
-            <SlideProvider isAdmin={false}>
-                {/* flex-grow: This is the "magic" property. 
+                <SlideProvider isAdmin={false}>
+                    {/* flex-grow: This is the "magic" property. 
                     It tells the content area to take up all available space,
                     automatically pushing the Footer to the very bottom.
                 */}
-                <main className='flex-grow'>
-                    {children}
-                </main>
 
-                <Footer />
-            </SlideProvider>
+                    <main className='flex-grow'>
+                        {children}
+                    </main>
+
+                    <Footer />
+                </SlideProvider>
+            </MenuProvider>
 
         </div>
     )

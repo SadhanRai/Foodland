@@ -10,14 +10,15 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cdn3d.iconscout.com" },
       { protocol: "https", hostname: "iconscout.com" },
       { protocol: "https", hostname: "res.cloudinary.com" },
+      { protocol: "https", hostname: "i.pinimg.com" },
       {
         protocol: 'https',
         hostname: 'png.pngtree.com',
         port: '',
         pathname: '/**',
       },
-
     ],
+    unoptimized: true,
   },
 };
 

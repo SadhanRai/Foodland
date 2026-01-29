@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import Container from "../../../src/components/container/Container";
+import Container from "../../../../src/components/container/Container";
 // Consistency: Using Plus from lucide-react instead of mixing libraries
 import { Pencil, Trash2, ExternalLink, Clock, Plus } from "lucide-react";
-import { useSlide } from "../../../src/hooks/useSlide";
+import { useSlide } from "../../../../src/hooks/useSlide";
 
 const HomeSlide = () => {
 
