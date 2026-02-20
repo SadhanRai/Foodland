@@ -2,6 +2,8 @@ import User from "../../model/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+// create api
+
 export const Register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -30,6 +32,8 @@ export const Register = async (req, res) => {
   }
 };
 
+//get api
+
 export const getRegister = async (req, res) => {
   try {
     const users = await User.find().sort({ createdAt: -1 });
@@ -38,6 +42,8 @@ export const getRegister = async (req, res) => {
     console.error({ message: "failed to fetch user from database", error });
   }
 };
+
+//patch api
 
 export const Login = async (req, res) => {
   try {
@@ -58,7 +64,7 @@ export const Login = async (req, res) => {
 
     const validPassword = await bcrypt.compare(
       password, // Use the destructured 'password' variable
-      user.password //this password coming from user, if both compare same logic true
+      user.password, //this password coming from user, if both compare same logic true
     );
 
     if (!validPassword) return res.status(400).json("wrong password!");
@@ -97,4 +103,13 @@ export const Logout = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Logout failed", error: error.message });
   }
+};
+
+export const getLoginUser = async (req, res) => {
+  res.status(200).json(req.user);
+};
+
+//patch api for update user data
+export const updateUser = async (req, res) => {
+  res.status(200).json({ message: "update user api is working" });
 };

@@ -10,7 +10,7 @@ const navItems = [
     { name: "Slides", href: "/admin/homeslide", icon: Package },
     { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
     { name: "Users", href: "/admin/users", icon: Users },
-    { name: "Settings", href: "/admin/settings", icon: Settings },
+    { name: "Settings", href: "/admin/account", icon: Settings },
 ];
 
 export default function Sidebar({ isOpen, toggleSidebar }) {

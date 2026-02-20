@@ -1,6 +1,6 @@
 import multer from "multer";
 
-const storage = multer.memoryStorage();
+const storage = multer.memoryStorage(); //store file in Ram // can be use as req.file 
 
 export const upload = multer({
   storage,
