@@ -36,7 +36,8 @@ const Navbar = () => {
         <nav className=" bg-white  inter border-b border-gray-200 w-full ">
             <Container>
 
-                {loading && <div className='text-center text-primary'>Loading...</div>}
+                {/* {loading && <div className='text-center text-primary'>Loading...</div>} */}
+                {/* <div className='text-center text-primary'>Loading...</div> */}
 
 
 

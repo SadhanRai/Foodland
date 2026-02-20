@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   role: { type: String, default: "user" },
+  
 });
 
 const User = mongoose.model("Users", userSchema);

@@ -46,7 +46,7 @@ const HomeSlide = () => {
     if (!slides) return <div className="p-10 text-center">Loading slides...</div>;
 
     return (
-        <div className="py-8 bg-gray-50 min-h-screen">
+        <div className="py-8 bg-gray-50 min-h-screen ">
             <Container>
                 {/* Header Section */}
                 <div className="flex justify-between items-center mb-8">
