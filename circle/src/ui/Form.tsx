@@ -120,7 +120,7 @@ const Form: React.FC<FormProps> = ({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 z-999">
             <div>
                 <label className="block text-sm font-medium mb-1">Brand Name</label>
                 <input
@@ -198,7 +198,7 @@ const Form: React.FC<FormProps> = ({
                 <button
                     type="submit"
                     disabled={loading}
-                    className={`px-5 py-2 rounded text-white ${loading ? "bg-gray-500" : "bg-black"}`}
+                    className={`px-5 py-2 rounded cursor-pointer text-white ${loading ? "bg-gray-500" : "bg-black"}`}
                 >
                     {loading ? "Submitting..." : submitText}
                 </button>

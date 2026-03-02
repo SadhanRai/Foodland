@@ -14,6 +14,7 @@ const MenuProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const fetchMenu = async () => {
             try {
+                setLoading(true);
                 console.log("fetch menu function workin");
                 const res = await axios.get("http://localhost:4000/api/menu/data");
                 console.log("what i fetche is ", res)
@@ -28,7 +29,7 @@ const MenuProvider = ({ children }: { children: ReactNode }) => {
 
             } catch (error) {
 
-                setError(error);
+                setError(error.message);
                 setRatelimit(true);
                 if (error.response?.status === 429) {
                     setRatelimit(true);

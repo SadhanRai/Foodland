@@ -4,6 +4,7 @@ import Container from "../../../../src/components/container/Container";
 // Consistency: Using Plus from lucide-react instead of mixing libraries
 import { Pencil, Trash2, ExternalLink, Clock, Plus } from "lucide-react";
 import { useSlide } from "../../../../src/hooks/useSlide";
+import Image from "next/image";
 
 const HomeSlide = () => {
 
@@ -22,7 +23,7 @@ const HomeSlide = () => {
     };
 
     // Assuming useSlide returns { slides, setSlides, isLoading }
-    const { slides, setSlides } = useSlide();
+    const { slides, setSlides, loading, error } = useSlide();
 
     const toggleStatus = (_id) => {
         // 1. Update local state immediately for snappy UI
@@ -75,7 +76,7 @@ const HomeSlide = () => {
                             </thead>
 
                             <tbody className="divide-y divide-gray-100">
-                                {slides.length > 0 ? (
+                                {
                                     slides.map((item) => (
                                         <tr
                                             key={item._id}
@@ -84,14 +85,20 @@ const HomeSlide = () => {
                                             {/* Info Column */}
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-4 min-w-[280px]">
-                                                    <div className="relative">
-                                                        <img
-                                                            src={item.link}
-                                                            alt={item.title}
-                                                            className={`w-14 h-14 rounded-lg object-cover shadow-sm transition-all ${item.isActive ? "opacity-100" : "opacity-40 grayscale"
-                                                                }`}
-                                                        />
-                                                    </div>
+                                                    {loading ? (<div className="w-14 h-14 bg-gray-200 rounded-lg animate-pulse" />) :
+                                                            (
+                                                        <div className="relative">
+
+                                                            <Image
+                                                                width={28}
+                                                                height={28}
+                                                                src={item.link}
+                                                                alt={item.title}
+                                                                className={`w-14 h-14 rounded-lg object-cover shadow-sm transition-all ${item.isActive ? "opacity-100" : "opacity-40 grayscale"
+                                                                    }`}
+                                                            />
+                                                        </div>
+                                                            )}
                                                     <div>
                                                         <h3 className={`font-bold text-sm transition-colors ${item.isActive ? "text-gray-900" : "text-gray-400"
                                                             }`}>
@@ -133,10 +140,15 @@ const HomeSlide = () => {
                                             {/* Author Column */}
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-2">
-                                                    <img
-                                                        src={item.author?.image || "https://ui-avatars.com/api/?name=" + item.author?.name}
-                                                        className="w-7 h-7 rounded-full border border-gray-100"
+                                                    <Image
+                                                        src={
+                                                            item.author?.image ||
+                                                            `https://ui-avatars.com/api/?name=${item.author?.name}`
+                                                        }
                                                         alt="avatar"
+                                                        width={28}
+                                                        height={28}
+                                                        className="rounded-full border border-gray-100"
                                                     />
                                                     <span className="text-sm font-medium text-gray-700">{item.author?.name}</span>
                                                 </div>
@@ -175,13 +187,7 @@ const HomeSlide = () => {
                                             </td>
                                         </tr>
                                     ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan="5" className="px-6 py-10 text-center text-gray-500">
-                                            No slides found. Click "Add New Slide" to get started.
-                                        </td>
-                                    </tr>
-                                )}
+                                }
                             </tbody>
                         </table>
                     </div>

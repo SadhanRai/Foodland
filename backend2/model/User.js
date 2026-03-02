@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   role: { type: String, default: "user" },
-  
+  profileImage: { type: String, default: "" },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const User = mongoose.model("Users", userSchema);

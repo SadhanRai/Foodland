@@ -1,6 +1,9 @@
 import User from "../../model/User.js";
 import bcrypt from "bcryptjs";
+import user from "../../model/User.js";
 import jwt from "jsonwebtoken";
+import { uploadFromBuffer } from "../utils/cloudinary.js";
+import cloudinary from "../config/cloudinary.js";
 
 // create api
 
@@ -109,7 +112,67 @@ export const getLoginUser = async (req, res) => {
   res.status(200).json(req.user);
 };
 
-//patch api for update user data
+// ---------PATCH API FOR UPDATE USER DATA----------------
+//FOR PUBLICid
+const getPublicId = (url) => {
+  if (!url) return null;
+  const parts = url.split("/");
+  const file = parts.pop();
+  const folder = parts.pop();
+  return `${folder}/${file.split(".")[0]}`;
+};
+
+//---STATSTS---
 export const updateUser = async (req, res) => {
-  res.status(200).json({ message: "update user api is working" });
+  try {
+    const userId = req.user._id;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const files = req.files || {};
+    const updateData = {};
+
+    //example of use of updateData object
+    // updateData.name = "sadhan";
+
+    // res.status(200).json({
+    //   message: "update user api is working",
+    //   userId,
+    //   user,
+    //   name: updateData.name,
+    // });
+
+    if (files.profileImage?.[0]) {
+      const oldImageId = getPublicId(user.profileImage);
+      if (oldImageId) await cloudinary.uploader.destroy(oldImageId);
+
+      //upload new image form buffer (muler RAM)
+      const newImageUrl = await uploadFromBuffer(
+        files.profileImage[0].buffer,
+        "profile",
+      );
+      updateData.profileImage = newImageUrl;
+    }
+
+    //-----------------UPDATE DATABASE---------------
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: updateData },
+      { new: true, runValidators: true },
+    );
+
+    res.status(200).json({
+      message: "update user api is working",
+      userId,
+      profileImage: updateData.profileImage,
+      updatedUser,
+    });
+  } catch (error) {
+    console.error({ message: "failed to update user data", error });
+    res.status(500).json({ message: "Update failed ", error: error.message });
+  }
 };
