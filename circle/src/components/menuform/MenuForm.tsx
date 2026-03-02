@@ -6,7 +6,7 @@ import Form from "../../ui/Form";
 import { useMenu } from "../../hooks/useMenu";
 
 const MenuForm = () => {
-    const { menus } = useMenu();
+    const { menus, error } = useMenu();
     const { loading } = useMenu();
 
     const [formOpen, setFormOpen] = useState(false);
@@ -24,6 +24,9 @@ const MenuForm = () => {
         setSelectedMenu(menus);
         setFormOpen(true);
     };
+
+
+
 
     return (
         <>
@@ -49,20 +52,21 @@ const MenuForm = () => {
                         </h3>
 
                         <div className="flex flex-wrap gap-2">
-                            {menus?.items?.length > 0 ? (
-                                menus.items.map((item, index) => (
+                            {loading
+                                ? Array.from({ length: 4 }).map((_, index) => (
+                                    <span
+                                        key={index}
+                                        className="px-3 py-1 rounded-full text-sm bg-white/30 animate-pulse w-20 h-6"
+                                    />
+                                ))
+                                : menus?.items?.map((item, index) => (
                                     <span
                                         key={index}
                                         className="bg-white/20 px-3 py-1 rounded-full text-sm"
                                     >
                                         {item.label}
                                     </span>
-                                ))
-                            ) : (
-                                <p className="text-sm opacity-80">
-                                    No menu items yet
-                                </p>
-                            )}
+                                ))}
                         </div>
                     </div>
                 </div>
@@ -71,22 +75,22 @@ const MenuForm = () => {
             {/* MODAL */}
             {formOpen && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
+                    className="fixed inset-0 z-999 flex items-center justify-center bg-black/40 px-4"
                     onClick={() => setFormOpen(false)}
                 >
                     <div
-                        className="bg-white w-full max-w-lg sm:max-w-xl md:max-w-2xl rounded-lg shadow-lg max-h-[90vh] overflow-y-auto"
+                        className="bg-white w-full max-w-lg sm:max-w-xl md:max-w-2xl rounded-lg shadow-lg max-h-[90vh] overflow-y-auto "
                         onClick={(e) => e.stopPropagation()}
                     >
                         {/* Header */}
-                        <div className="flex justify-between items-center p-4 border-b border-gray-400 w-full max-w-lg sm:max-w-xl md:max-w-2xl bg-red-400">
+                        <div className="flex justify-between items-center p-4 border-b border-gray-200 w-full max-w-lg sm:max-w-xl md:max-w-2xl   ">
                             <h2 className="text-lg font-semibold">
-                                {mode === "create" ? "Create Menu" : "Edits Menu"}
+                                {mode === "create" ? "Create Menu" : "Edit Menu"}
                             </h2>
                             <button
-                                className="text-2xl"
-                                onClick={() => setFormOpen(false)}
+                                className="text-2xl hover:opacity-70 transition cursor-pointer" onClick={() => setFormOpen(false)}
                             >
+
                                 <RxCross2 />
                             </button>
                         </div>
@@ -103,7 +107,7 @@ const MenuForm = () => {
 
                                 loading={loading}
 
-                            // 👈 tell form create or edit
+                            // tell form create or edit
                             />
                         </div>
                     </div>

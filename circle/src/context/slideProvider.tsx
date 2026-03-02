@@ -21,6 +21,7 @@ const SlideProvider = ({ children, isAdmin = false }: SlideProviderProps) => {
         const fetchSlide = async () => {
             const endpoint = isAdmin ? "/api/slide/data/admin" : "/api/slide/data";
             try {
+                setLoading(true);
 
                 console.log("fetch Slide function workin");
                 const res = await axios.get(`http://localhost:4000${endpoint}`);

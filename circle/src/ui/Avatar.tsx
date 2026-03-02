@@ -1,9 +1,13 @@
 "use client ";
 import React from 'react'
 import Image from 'next/image';
+import { useUser } from '../hooks/useUser';
 
-const Avatar = ({ user, image, size = 40 }) => {
+const Avatar = ({ image, size = 40 }) => {
+    const data = useUser();
+    const user = data?.user;
     if (!user) return null;
+
     const getInitials = (name) => {
 
         if (!name) return "";
@@ -31,17 +35,17 @@ const Avatar = ({ user, image, size = 40 }) => {
         const color = `hsl(${hash % 360}, 70%, 50%)`;
         return color;
     }
-    const bgColor = generateColor(user.name);
+    const bgColor = generateColor(user?.name || "");
 
 
-    if (image || user.avatar) {
+    if (image || user?.profileImage) {
         return (
             <div
                 className="relative overflow-hidden rounded-full"
                 style={{ width: size, height: size }}
             >
                 <Image
-                    src={image || user.avatar}
+                    src={image || user?.profileImage}
                     alt="User Avatar"
                     fill
                     className="object-cover"

@@ -252,8 +252,8 @@ export const updateSlide = async (req, res) => {
     const files = req.files || {};
 
     // ---------- SLIDE IMAGE ----------
-    if (files.image?.[0]) {
-      const oldId = getPublicId(slide.link);
+    if (files.image?.[0]) {  //if user select multiple it only takes first one
+      const oldId = getPublicId(slide.link); 
       if (oldId) await cloudinary.uploader.destroy(oldId);
 
       const newSlideImg = await uploadFromBuffer(files.image[0].buffer, "slides");

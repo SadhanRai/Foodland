@@ -19,7 +19,7 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
     // const [isOpen, setIsOpen] = useState(false)
 
     // const toggleSidebar = () => setIsOpen(!isOpen);
-    const user = useUser();
+    const { user, loading, error } = useUser();
     console.log("logged in user in header is ", user);
     const handleLogout = async () => {
 
@@ -84,8 +84,11 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
                 <div className="relative" ref={dropdownRef}>
                     <button onClick={() => setIsProfileOpen(!isProfileOpen)} className="flex items-center gap-2 p-1 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer">
                         <div className="w-8 h-8 lg:w-10 lg:h-10  border-gray-200">
-                            <Avatar user={user.user} size={40}  />
-                            {/* <Image src="https://i.pinimg.com/736x/cf/d1/b8/cfd1b8dabcdb96c56807872afcd80277.jpg" alt="User" width={40} height={40} /> */}
+                            {loading ? (<div className="w-full h-full bg-gray-300 animate-pulse rounded-full" />) :
+                                (
+                                    <Avatar size={40} />
+
+                                )}
                         </div>
                         <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
                     </button>
