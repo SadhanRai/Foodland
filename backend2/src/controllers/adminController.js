@@ -1,6 +1,5 @@
 import User from "../../model/User.js";
 import bcrypt from "bcryptjs";
-import user from "../../model/User.js";
 import jwt from "jsonwebtoken";
 import { uploadFromBuffer } from "../utils/cloudinary.js";
 import cloudinary from "../config/cloudinary.js";

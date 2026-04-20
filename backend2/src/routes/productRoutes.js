@@ -1,8 +1,9 @@
 import express from "express";
 import { ensuereAuthenctication } from "../middleware/Auth.js";
+import { verifyToken } from "../middleware/TokenValidation.js";
 const router = express.Router();
 
-router.get("/products", ensuereAuthenctication, (req, res) => {
+router.get("/products", verifyToken, (req, res) => {
   console.log("---------------------logged in user detail----", req.user);
   res.status(200).json([
     {

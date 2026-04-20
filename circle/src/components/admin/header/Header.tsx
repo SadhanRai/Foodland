@@ -93,11 +93,11 @@ const Header = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
                         <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} />
                     </button>
 
-                    {isProfileOpen && (
+                    {isProfileOpen && ( //is form open is true then show this else nothing 
                         <div className="absolute right-0 mt-3 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 p-2 cursor-pointer z-50">
                             <div className="px-4 py-3 border-b border-gray-50 mb-1">
-                                <p className="text-sm font-bold text-gray-800">{user.user.name}</p>
-                                <p className="text-sm font-bold text-gray-800 underline">{user.user.email}</p>
+                                <p className="text-sm font-bold text-gray-800">{user.name || "User"}</p>
+                                <p className="text-sm font-bold text-gray-800 underline">{user.email}</p>
                             </div>
                             {/* GRAY HOVER STATES */}
                             <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer">

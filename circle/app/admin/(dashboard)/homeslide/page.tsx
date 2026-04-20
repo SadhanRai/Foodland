@@ -1,12 +1,17 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Container from "../../../../src/components/container/Container";
 // Consistency: Using Plus from lucide-react instead of mixing libraries
 import { Pencil, Trash2, ExternalLink, Clock, Plus } from "lucide-react";
 import { useSlide } from "../../../../src/hooks/useSlide";
 import Image from "next/image";
+import TableSkeleton from "./TableSkeleton";
+import Form from "../../../../src/ui/Form";
 
 const HomeSlide = () => {
+    const [formOpen, setFormOpen] = useState(false);
+
+
 
 
     const formatCreatedAt = (dateString) => {
@@ -44,13 +49,14 @@ const HomeSlide = () => {
     };
 
     // Handle case where slides might be loading or undefined
-    if (!slides) return <div className="p-10 text-center">Loading slides...</div>;
 
     return (
+
         <div className="py-8 bg-gray-50 min-h-screen ">
+            {formOpen && <div><Form /></div>}
             <Container>
                 {/* Header Section */}
-                <div className="flex justify-between items-center mb-8">
+                <div className="flex justify-between items-center mb-8" onClick={() => setFormOpen(!formOpen)}>
                     <div>
                         <h2 className="text-2xl font-bold text-gray-900">Slider Management</h2>
                         <p className="text-sm text-gray-500 mt-1">Manage your homepage hero images and content.</p>
@@ -77,16 +83,18 @@ const HomeSlide = () => {
 
                             <tbody className="divide-y divide-gray-100">
                                 {
-                                    slides.map((item) => (
-                                        <tr
-                                            key={item._id}
-                                            className={`transition-colors ${item.isActive ? "bg-white" : "bg-gray-50/50"}`}
-                                        >
-                                            {/* Info Column */}
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center gap-4 min-w-[280px]">
-                                                    {loading ? (<div className="w-14 h-14 bg-gray-200 rounded-lg animate-pulse" />) :
-                                                            (
+                                    loading ? (<TableSkeleton />) : (
+
+
+                                        slides.map((item) => (
+                                            <tr
+                                                key={item._id}
+                                                className={`transition-colors ${item.isActive ? "bg-white" : "bg-gray-50/50"}`}
+                                            >
+                                                {/* Info Column */}
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center gap-4 min-w-[280px]">
+
                                                         <div className="relative">
 
                                                             <Image
@@ -98,95 +106,96 @@ const HomeSlide = () => {
                                                                     }`}
                                                             />
                                                         </div>
-                                                            )}
-                                                    <div>
-                                                        <h3 className={`font-bold text-sm transition-colors ${item.isActive ? "text-gray-900" : "text-gray-400"
-                                                            }`}>
-                                                            {item.title}
-                                                        </h3>
-                                                        <div className="text-xs text-gray-500 flex items-center gap-2 mt-1">
-                                                            <span className="flex items-center gap-1">
-                                                                <Clock size={12} /> {item.time}
-                                                            </span>
-                                                            <span>•</span>
-                                                            <span className="capitalize">
-                                                                {item.type?.replace(/"/g, "")}
-                                                            </span>
+
+                                                        <div>
+                                                            <h3 className={`font-bold text-sm transition-colors ${item.isActive ? "text-gray-900" : "text-gray-400"
+                                                                }`}>
+                                                                {item.title}
+                                                            </h3>
+                                                            <div className="text-xs text-gray-500 flex items-center gap-2 mt-1">
+                                                                <span className="flex items-center gap-1">
+                                                                    <Clock size={12} /> {item.time}
+                                                                </span>
+                                                                <span>•</span>
+                                                                <span className="capitalize">
+                                                                    {item.type?.replace(/"/g, "")}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
+                                                </td>
 
-                                            {/* FIXED DATE CELL */}
-                                            <td className="px-2 py-4 text-sm">
-                                                {formatCreatedAt(item.createdAt)}
-                                            </td>
+                                                {/* FIXED DATE CELL */}
+                                                <td className="px-2 py-4 text-sm">
+                                                    {formatCreatedAt(item.createdAt)}
+                                                </td>
 
-                                            {/* Status Toggle Column */}
-                                            <td className="px-6 py-4">
-                                                <button
-                                                    onClick={() => toggleStatus(item._id)}
-                                                    aria-label="Toggle Status"
-                                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${item.isActive ? "bg-green-500" : "bg-gray-300"
-                                                        }`}
-                                                >
-                                                    <span
-                                                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${item.isActive ? "translate-x-6" : "translate-x-1"
-                                                            }`}
-                                                    />
-                                                </button>
-                                            </td>
-
-                                            {/* Author Column */}
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center gap-2">
-                                                    <Image
-                                                        src={
-                                                            item.author?.image ||
-                                                            `https://ui-avatars.com/api/?name=${item.author?.name}`
-                                                        }
-                                                        alt="avatar"
-                                                        width={28}
-                                                        height={28}
-                                                        className="rounded-full border border-gray-100"
-                                                    />
-                                                    <span className="text-sm font-medium text-gray-700">{item.author?.name}</span>
-                                                </div>
-                                            </td>
-
-                                            {/* Date Column */}
-                                            <td className="px-6 py-4 text-sm text-gray-500">
-                                                {new Date(item.createdAt).toLocaleDateString(undefined, {
-                                                    month: 'short',
-                                                    day: 'numeric',
-                                                    year: 'numeric'
-                                                })}
-                                            </td>
-
-                                            {/* Actions Column */}
-                                            <td className="px-6 py-4 text-right">
-                                                <div className="flex justify-end gap-1">
-                                                    <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
-                                                        <Pencil size={18} />
-                                                    </button>
+                                                {/* Status Toggle Column */}
+                                                <td className="px-6 py-4">
                                                     <button
-                                                        onClick={() => deleteSlide(item._id)}
-                                                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                        onClick={() => toggleStatus(item._id)}
+                                                        aria-label="Toggle Status"
+                                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${item.isActive ? "bg-green-500" : "bg-gray-300"
+                                                            }`}
                                                     >
-                                                        <Trash2 size={18} />
+                                                        <span
+                                                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${item.isActive ? "translate-x-6" : "translate-x-1"
+                                                                }`}
+                                                        />
                                                     </button>
-                                                    <a
-                                                        href={item.link}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-                                                    >
-                                                        <ExternalLink size={18} />
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))
+                                                </td>
+
+                                                {/* Author Column */}
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center gap-2">
+                                                        <Image
+                                                            src={
+                                                                item.author?.image ||
+                                                                `https://ui-avatars.com/api/?name=${item.author?.name}`
+                                                            }
+                                                            alt="avatar"
+                                                            width={28}
+                                                            height={28}
+                                                            className="rounded-full border border-gray-100"
+                                                        />
+                                                        <span className="text-sm font-medium text-gray-700">{item.author?.name}</span>
+                                                    </div>
+                                                </td>
+
+                                                {/* Date Column */}
+                                                <td className="px-6 py-4 text-sm text-gray-500">
+                                                    {new Date(item.createdAt).toLocaleDateString(undefined, {
+                                                        month: 'short',
+                                                        day: 'numeric',
+                                                        year: 'numeric'
+                                                    })}
+                                                </td>
+
+                                                {/* Actions Column */}
+                                                <td className="px-6 py-4 text-right">
+                                                    <div className="flex justify-end gap-1">
+                                                        <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                                                            <Pencil size={18} />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => deleteSlide(item._id)}
+                                                            className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                        >
+                                                            <Trash2 size={18} />
+                                                        </button>
+                                                        <a
+                                                            href={item.link}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                                                        >
+                                                            <ExternalLink size={18} />
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    )
                                 }
                             </tbody>
                         </table>
