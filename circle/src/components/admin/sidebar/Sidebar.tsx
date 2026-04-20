@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Home, Package, ShoppingCart, Users, Settings, Menu, X, Utensils } from "lucide-react";
+import { Home, Package, SquarePen, Users, Settings, Menu, X, Utensils } from "lucide-react";
 import Link from "next/link";
+// import MenuForm from "../../../components/menuform/MenuForm";
 
 const navItems = [
     { name: "Dashboard", href: "/admin", icon: Home },
     { name: "Slides", href: "/admin/homeslide", icon: Package },
-    { name: "Orders", href: "/admin/orders", icon: ShoppingCart },
+    { name: "Posts", href: "/admin/posts", icon: SquarePen },
     { name: "Users", href: "/admin/users", icon: Users },
     { name: "Settings", href: "/admin/account", icon: Settings },
 ];
